@@ -1,10 +1,13 @@
 package com.fundoonotes.service.impl;
 
+import com.fundoonotes.dto.request.UserLoginDTO;
 import com.fundoonotes.dto.request.UserRegistrationDTO;
 import com.fundoonotes.entity.User;
 import com.fundoonotes.exception.UserException;
 import com.fundoonotes.repository.UserRepository;
 import com.fundoonotes.service.UserService;
+import com.fundoonotes.util.JwtUtil;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
@@ -14,12 +17,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    // [Prajwal]:UC4:Constructor injection managed by Lombok @RequiredArgsConstructor
     private final UserRepository userRepository;
+    
+    // [Prajwal]:UC5:Injecting Password Encoder to hash passwords and JWT to map credentials
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Override
     public User registerUser(UserRegistrationDTO dto) {
-        // [Prajwal]:UC4:Business logic to check if email already exists
         Optional<User> existingUser = userRepository.findByEmail(dto.getEmail());
         if (existingUser.isPresent()) {
             throw new UserException("Email is already registered! Please login.");
@@ -30,9 +35,24 @@ public class UserServiceImpl implements UserService {
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
         
-        // Note: Storing plain text for UC4. In later UCs (Auth & Security), we will inject PasswordEncoder.
-        user.setPassword(dto.getPassword()); 
+        // [Prajwal]:UC5:Encrypting password with BCrypt before storing in DB
+        user.setPassword(passwordEncoder.encode(dto.getPassword())); 
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public String loginUser(UserLoginDTO dto) {
+        // [Prajwal]:UC5:Check if user email corresponds to DB record
+        User user = userRepository.findByEmail(dto.getEmail())
+                .orElseThrow(() -> new UserException("User not found with this email"));
+                
+        // [Prajwal]:UC5:Validate unencrypted password against standard bcrypt hash
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new UserException("Invalid Password");
+        }
+        
+        // [Prajwal]:UC5:Login successful -> Create & yield JWT map
+        return jwtUtil.generateToken(user.getId(), user.getEmail());
     }
 }
