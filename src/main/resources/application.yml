@@ -1,0 +1,23 @@
+# [Prajwal]:UC2:Database Configuration properties for MySQL and JPA
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: fundoo-notes
+    
+  datasource:
+    url: jdbc:mysql://localhost:3306/fundoonotes_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: password # TODO: Change to your actual local MySQL password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # Automatically creates/updates tables based on Entities
+    show-sql: true # Helps in debugging by logging queries 
+    properties:
+      hibernate:
+        format_sql: true # Makes the logged SQL readable
+        dialect: org.hibernate.dialect.MySQL8Dialect # Modern MySQL dialect
