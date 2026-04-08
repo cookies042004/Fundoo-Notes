@@ -6,9 +6,11 @@ import com.fundoonotes.entity.Note;
 import java.util.List;
 
 public interface NoteService {
-    // [Prajwal]:UC8:Contract for Note creation decoupled logic 
     Note createNote(NoteDTO noteDTO, String tokenEmail);
-
-    // [Prajwal]:UC9:Contract for fetching all notes relative to user email
     List<Note> getAllNotes(String tokenEmail);
+
+    // [Prajwal]:UC10:Contracts for toggling note states
+    Note togglePin(Long noteId, String tokenEmail);
+    Note toggleArchive(Long noteId, String tokenEmail);
+    Note toggleTrash(Long noteId, String tokenEmail);
 }
