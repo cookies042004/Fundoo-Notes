@@ -21,6 +21,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
 
+    // [Prajwal]:UC8:Catching custom Note exceptions
+    @ExceptionHandler(NoteException.class)
+    public ResponseEntity<ResponseDTO> handleNoteException(NoteException exception) {
+        ResponseDTO responseDTO = new ResponseDTO(exception.getMessage(), null);
+        // Using NOT_FOUND if operations like delete/edit fail later
+        return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND); 
+    }
+
     // [Prajwal]:UC4:Catching validation exceptions (DTO constraints)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseDTO> handleValidationExceptions(MethodArgumentNotValidException exception) {
