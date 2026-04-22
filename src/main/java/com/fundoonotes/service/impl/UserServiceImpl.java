@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final MessageProducer producer;
+    private final RedisService redisService;
 
     @Override
     public User registerUser(UserRegistrationDTO dto) {
@@ -39,23 +40,33 @@ public class UserServiceImpl implements UserService {
         // UC5:Encrypting password with BCrypt before storing in DB
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
+        User savedUser = userRepository.save(user);
+
         producer.sendMessage("User Registered: " + user.getEmail());
 
-        return userRepository.save(user);
+        return savedUser;
     }
 
     @Override
     public String loginUser(UserLoginDTO dto) {
-        // UC5:Check if user email corresponds to DB record
+
         User user = userRepository.findByEmail(dto.getEmail())
                 .orElseThrow(() -> new UserException("User not found with this email"));
-                
-        // UC5:Validate unencrypted password against standard bcrypt hash
+
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new UserException("Invalid Password");
         }
-        
-        // UC5:Login successful -> Create & yield JWT map
-        return jwtUtil.generateToken(user.getId(), user.getEmail());
+
+        // Generate JWT
+        String token = jwtUtil.generateToken(user.getId(), user.getEmail());
+
+        // Store token in Redis (TTL = 30 minutes)
+        redisService.save(
+                "TOKEN_" + user.getEmail(),
+                token,
+                30
+        );
+
+        return token;
     }
 }

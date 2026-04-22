@@ -35,4 +35,8 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    public String extractEmail(String token) {
+        return extractClaims(token).getSubject();
+    }
 }
