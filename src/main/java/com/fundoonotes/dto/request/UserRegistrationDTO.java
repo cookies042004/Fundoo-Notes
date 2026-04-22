@@ -8,8 +8,8 @@ import lombok.Data;
 @Data
 public class UserRegistrationDTO {
     
-    // [Prajwal]:UC4:User Registration DTO with validation rules
-    
+    // UC4:User Registration DTO with validation rules
+
     @NotBlank(message = "First name is mandatory")
     @Pattern(regexp = "^[A-Z][a-zA-Z]{2,}$", message = "First name must start with a capital letter and be at least 3 characters")
     private String firstName;

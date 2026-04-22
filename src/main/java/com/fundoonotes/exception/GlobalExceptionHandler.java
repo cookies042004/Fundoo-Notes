@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // [Prajwal]:UC4:Catching custom user exceptions
+    // UC4:Catching custom user exceptions
     @ExceptionHandler(UserException.class)
     public ResponseEntity<ResponseDTO> handleUserException(UserException exception) {
         ResponseDTO responseDTO = new ResponseDTO(exception.getMessage(), null);

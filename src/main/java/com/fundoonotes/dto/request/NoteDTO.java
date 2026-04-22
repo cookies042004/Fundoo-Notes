@@ -5,14 +5,11 @@ import lombok.Data;
 
 @Data
 public class NoteDTO {
-    // [Prajwal]:UC8:Data Transfer Object to isolate Note creation payload
+    // UC8:Data Transfer Object to isolate Note creation payload
     
     @NotBlank(message = "Title is required")
     private String title;
 
     @NotBlank(message = "Description is required")
     private String description;
-
-    // Optional color field. Frontend sends hex strings e.g. "#FF0000"
-    private String color = "#FFFFFF";
 }

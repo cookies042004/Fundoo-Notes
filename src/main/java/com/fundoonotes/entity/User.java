@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class User {
 
-    // [Prajwal]:UC3:User Entity reflecting columns in the database
+    // UC3:User Entity reflecting columns in the database
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

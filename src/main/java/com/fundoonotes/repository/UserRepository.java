@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     
-    // [Prajwal]:UC3:Abstract method constructed by Spring Data JPA to fetch user by email
+    // UC3:Abstract method constructed by Spring Data JPA to fetch user by email
     Optional<User> findByEmail(String email);
 }

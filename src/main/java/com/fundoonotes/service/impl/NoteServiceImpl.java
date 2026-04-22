@@ -20,6 +20,8 @@ public class NoteServiceImpl implements NoteService {
     private final NoteRepository noteRepository;
     private final UserRepository userRepository;
 
+    private final MessageProducer producer;
+
     // Helper method to DRY up user extraction
     private User getAuthenticatedUser(String tokenEmail) {
         return userRepository.findByEmail(tokenEmail)
@@ -33,8 +35,9 @@ public class NoteServiceImpl implements NoteService {
         Note note = new Note();
         note.setTitle(noteDTO.getTitle());
         note.setDescription(noteDTO.getDescription());
-        note.setColor(noteDTO.getColor() != null ? noteDTO.getColor() : "#FFFFFF");
         note.setUserId(user.getId());
+
+        producer.sendMessage("Note Created: " + note.getTitle());
 
         return noteRepository.save(note);
     }
@@ -45,7 +48,7 @@ public class NoteServiceImpl implements NoteService {
         return noteRepository.findAllByUserId(user.getId());
     }
 
-    // [Prajwal]:UC10:Crucial security helper checking Note ID AND User ID ownership
+    // UC10:Crucial security helper checking Note ID AND User ID ownership
     private Note getVerifiedNote(Long noteId, Long userId) {
         return noteRepository.findByIdAndUserId(noteId, userId)
                 .orElseThrow(() -> new NoteException("Note not found or Unauthorized access!"));
@@ -56,7 +59,7 @@ public class NoteServiceImpl implements NoteService {
         User user = getAuthenticatedUser(tokenEmail);
         Note note = getVerifiedNote(noteId, user.getId());
         
-        // [Prajwal]:UC10:Toggle logic
+        // UC10:Toggle logic
         note.setPinned(!note.isPinned());
         return noteRepository.save(note);
     }
