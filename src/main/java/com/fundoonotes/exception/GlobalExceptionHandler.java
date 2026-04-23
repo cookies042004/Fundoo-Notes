@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // [Prajwal]:UC4:Catching custom user exceptions
+    // UC4:Catching custom user exceptions
     @ExceptionHandler(UserException.class)
     public ResponseEntity<ResponseDTO> handleUserException(UserException exception) {
         ResponseDTO responseDTO = new ResponseDTO(exception.getMessage(), null);
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
 
-    // [Prajwal]:UC8:Catching custom Note exceptions
+    // UC8:Catching custom Note exceptions
     @ExceptionHandler(NoteException.class)
     public ResponseEntity<ResponseDTO> handleNoteException(NoteException exception) {
         ResponseDTO responseDTO = new ResponseDTO(exception.getMessage(), null);
@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND); 
     }
 
-    // [Prajwal]:UC4:Catching validation exceptions (DTO constraints)
+    // UC4:Catching validation exceptions (DTO constraints)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseDTO> handleValidationExceptions(MethodArgumentNotValidException exception) {
         List<ObjectError> errorList = exception.getBindingResult().getAllErrors();

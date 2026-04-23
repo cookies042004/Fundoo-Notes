@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FundooNotesApplication {
 
     public static void main(String[] args) {
-        // [Prajwal]:UC1:Application entry point
+        // UC1:Application entry point
         SpringApplication.run(FundooNotesApplication.class, args);
     }
 }

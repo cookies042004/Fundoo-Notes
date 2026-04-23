@@ -21,7 +21,7 @@ public class NoteController {
 
     private final NoteService noteService;
 
-    // [Prajwal]:UC8:Endpoint to create a new Note. This route is locked via SecurityConfig!
+    // UC8:Endpoint to create a new Note. This route is locked via SecurityConfig!
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> createNote(@Valid @RequestBody NoteDTO noteDTO, Principal principal) {
         
@@ -31,7 +31,7 @@ public class NoteController {
 
         Note savedNote = noteService.createNote(noteDTO, userEmail);
         
-        // [Prajwal]:UC8:Return ID of generated Note
+        // UC8:Return ID of generated Note
         ResponseDTO responseDTO = new ResponseDTO("Note Created Successfully", savedNote.getId());
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }

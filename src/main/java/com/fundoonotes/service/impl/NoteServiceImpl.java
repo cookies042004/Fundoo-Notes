@@ -21,11 +21,11 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public Note createNote(NoteDTO noteDTO, String tokenEmail) {
         
-        // [Prajwal]:UC8:Cross-check: Ensure the email embedded in the JWT actually still exists in DB
+        // UC8:Cross-check: Ensure the email embedded in the JWT actually still exists in DB
         User user = userRepository.findByEmail(tokenEmail)
                 .orElseThrow(() -> new UserException("User associated with token not found!"));
                 
-        // [Prajwal]:UC8:Hydrate Entity from DTO
+        // UC8:Hydrate Entity from DTO
         Note note = new Note();
         note.setTitle(noteDTO.getTitle());
         note.setDescription(noteDTO.getDescription());
@@ -33,10 +33,10 @@ public class NoteServiceImpl implements NoteService {
         // Defaults to White if null is sent
         note.setColor(noteDTO.getColor() != null ? noteDTO.getColor() : "#FFFFFF");
         
-        // [Prajwal]:UC8:Link operation. Tie this note to the user ID!
+        // UC8:Link operation. Tie this note to the user ID!
         note.setUserId(user.getId());
 
-        // [Prajwal]:UC8:Persist the note
+        // UC8:Persist the note
         return noteRepository.save(note);
     }
 }
