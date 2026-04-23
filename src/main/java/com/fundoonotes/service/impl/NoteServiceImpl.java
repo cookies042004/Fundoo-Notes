@@ -35,11 +35,11 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<Note> getAllNotes(String tokenEmail) {
-        // [Prajwal]:UC9:Security step. Grab user ID from email embedded in JWT context
+        // UC9:Security step. Grab user ID from email embedded in JWT context
         User user = userRepository.findByEmail(tokenEmail)
                 .orElseThrow(() -> new UserException("User not found!"));
                 
-        // [Prajwal]:UC9:Fetch EXCLUSIVELY notes that belong to this ID
+        // UC9:Fetch EXCLUSIVELY notes that belong to this ID
         return noteRepository.findAllByUserId(user.getId());
     }
 }

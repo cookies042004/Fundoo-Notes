@@ -22,7 +22,7 @@ public class NoteController {
 
     private final NoteService noteService;
 
-    // [Prajwal]:UC8:Endpoint to create a new Note. This route is locked via SecurityConfig!
+    // UC8:Endpoint to create a new Note. This route is locked via SecurityConfig!
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> createNote(@Valid @RequestBody NoteDTO noteDTO, Principal principal) {
         String userEmail = principal.getName();
@@ -33,7 +33,7 @@ public class NoteController {
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
-    // [Prajwal]:UC9:REST mapping to return a full JSON array of the user's notes
+    // UC9:REST mapping to return a full JSON array of the user's notes
     @GetMapping("/all")
     public ResponseEntity<ResponseDTO> getAllNotes(Principal principal) {
         String userEmail = principal.getName();
