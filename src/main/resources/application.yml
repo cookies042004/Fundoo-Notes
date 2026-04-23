@@ -45,5 +45,9 @@ spring:
     user: admin
     password: admin
 
-    jms:
-      pub-sub-domain: false
+  jms:
+    pub-sub-domain: false
+
+  batch:
+    jdbc:
+      initialize-schema: always
