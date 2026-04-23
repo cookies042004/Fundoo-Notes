@@ -1,4 +1,4 @@
-# [Prajwal]:UC2:Database Configuration properties for MySQL and JPA
+# UC2:Database Configuration properties for MySQL and JPA
 
 server:
   port: 8080
