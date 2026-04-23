@@ -20,7 +20,7 @@ public class UserController {
 
     private final UserService userService;
 
-    // [Prajwal]:UC4:Endpoint for user registration
+    // UC4:Endpoint for user registration
     @PostMapping("/register")
     public ResponseEntity<ResponseDTO> registerUser(@Valid @RequestBody UserRegistrationDTO userDTO) {
         log.info("Received request to register user: {}", userDTO.getEmail());
@@ -29,13 +29,13 @@ public class UserController {
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
     
-    // [Prajwal]:UC5:Endpoint for user login returning JWT Token
+    // UC5:Endpoint for user login returning JWT Token
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> loginUser(@Valid @RequestBody UserLoginDTO loginDTO) {
         log.info("Received request to login user: {}", loginDTO.getEmail());
         String token = userService.loginUser(loginDTO);
         
-        // [Prajwal]:UC5:Provide token string mapping back to frontend
+        // UC5:Provide token string mapping back to frontend
         ResponseDTO responseDTO = new ResponseDTO("User logged in successfully", token);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

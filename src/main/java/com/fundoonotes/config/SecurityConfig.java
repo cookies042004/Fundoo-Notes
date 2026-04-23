@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // [Prajwal]:UC5:Security Filter Chain separating public auth from protected routes
+    // UC5:Security Filter Chain separating public auth from protected routes
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -28,7 +28,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // [Prajwal]:UC5:BCrypt Password Encoder Bean
+    // UC5:BCrypt Password Encoder Bean
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
