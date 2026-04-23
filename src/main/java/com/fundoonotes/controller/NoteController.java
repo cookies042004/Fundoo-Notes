@@ -34,7 +34,7 @@ public class NoteController {
         return new ResponseEntity<>(new ResponseDTO("Notes Fetched Successfully", notesList), HttpStatus.OK);
     }
 
-    // [Prajwal]:UC10:Toggle Endpoints mapping to PUT requests
+    // UC10:Toggle Endpoints mapping to PUT requests
     @PutMapping("/{noteId}/pin")
     public ResponseEntity<ResponseDTO> togglePin(@PathVariable Long noteId, Principal principal) {
         Note note = noteService.togglePin(noteId, principal.getName());
