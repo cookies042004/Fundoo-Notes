@@ -22,7 +22,7 @@ public class UserController {
 
     private final UserService userService;
 
-    // [Prajwal]:UC4:Endpoint for user registration
+    //   UC4:Endpoint for user registration
     @PostMapping("/register")
     public ResponseEntity<ResponseDTO> registerUser(@Valid @RequestBody UserRegistrationDTO userDTO) {
         log.info("Received request to register user: {}", userDTO.getEmail());
@@ -31,7 +31,7 @@ public class UserController {
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
     
-    // [Prajwal]:UC5:Endpoint for user login returning JWT Token
+    //   UC5:Endpoint for user login returning JWT Token
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> loginUser(@Valid @RequestBody UserLoginDTO loginDTO) {
         log.info("Received request to login user: {}", loginDTO.getEmail());
@@ -40,7 +40,7 @@ public class UserController {
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
-    // [Prajwal]:UC6:Endpoint to test JWT Validation. Requires Authorization Header!
+    //   UC6:Endpoint to test JWT Validation. Requires Authorization Header!
     @GetMapping("/profile")
     public ResponseEntity<ResponseDTO> getUserProfile(Principal principal) {
         // The 'principal' is automatically injected by the Spring Security context via our JwtAuthFilter

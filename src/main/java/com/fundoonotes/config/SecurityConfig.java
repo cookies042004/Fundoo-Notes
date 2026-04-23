@@ -23,7 +23,7 @@ public class SecurityConfig {
         this.jwtAuthFilter = jwtAuthFilter;
     }
 
-    // [Prajwal]:UC6:Security Filter Chain now integrates JwtAuthenticationFilter
+    //   UC6:Security Filter Chain now integrates JwtAuthenticationFilter
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -33,13 +33,13 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            // [Prajwal]:UC6:Add our custom filter BEFORE the standard Spring Security Filter
+            //   UC6:Add our custom filter BEFORE the standard Spring Security Filter
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
             
         return http.build();
     }
 
-    // [Prajwal]:UC5:BCrypt Password Encoder Bean
+    //   UC5:BCrypt Password Encoder Bean
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

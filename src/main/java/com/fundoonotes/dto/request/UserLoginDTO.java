@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class UserLoginDTO {
-    // [Prajwal]:UC5:User Login DTO
+    //   UC5:User Login DTO
     
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Email should be valid")

@@ -22,14 +22,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
-    // [Prajwal]:UC6:Intercepts exactly ONE time per request to ensure auth
+    //   UC6:Intercepts exactly ONE time per request to ensure auth
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         
         final String authHeader = request.getHeader("Authorization");
 
-        // [Prajwal]:UC6:Verify header structure starts with Bearer
+        //   UC6:Verify header structure starts with Bearer
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -38,11 +38,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String token = authHeader.substring(7);
 
         try {
-            // [Prajwal]:UC6:Extract claims. Throws exception if tampered or expired.
+            //   UC6:Extract claims. Throws exception if tampered or expired.
             Claims claims = jwtUtil.extractClaims(token);
             String email = claims.getSubject();
             
-            // [Prajwal]:UC6:If token is valid and context is empty, authorize them in Spring Context
+            //   UC6:If token is valid and context is empty, authorize them in Spring Context
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 
                 UsernamePasswordAuthenticationToken authToken = 
@@ -50,11 +50,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 
-                // [Prajwal]:UC6:Tell Spring Security "They are legit, let them pass!"
+                //   UC6:Tell Spring Security "They are legit, let them pass!"
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         } catch (Exception e) {
-            // [Prajwal]:UC6:Token is invalid or expired
+            //   UC6:Token is invalid or expired
             logger.error("Cannot set user authentication: " + e.getMessage());
         }
 
