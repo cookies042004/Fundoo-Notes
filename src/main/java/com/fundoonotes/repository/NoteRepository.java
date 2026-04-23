@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface NoteRepository extends JpaRepository<Note, Long> {
 
     // UC7:Find every note owned by a generic User ID
-    List<Note> findAllByUserId(Long userId);
+    List<Note> findByUserId(Long userId);
 
     // UC7:Critical Query -> Prevents "User A" from modifying "User B's" Note via URL tampering
     Optional<Note> findByIdAndUserId(Long id, Long userId);
