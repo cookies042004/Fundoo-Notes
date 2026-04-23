@@ -14,12 +14,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    // [Prajwal]:UC4:Constructor injection managed by Lombok @RequiredArgsConstructor
+    // UC4:Constructor injection managed by Lombok @RequiredArgsConstructor
     private final UserRepository userRepository;
 
     @Override
     public User registerUser(UserRegistrationDTO dto) {
-        // [Prajwal]:UC4:Business logic to check if email already exists
+        // UC4:Business logic to check if email already exists
         Optional<User> existingUser = userRepository.findByEmail(dto.getEmail());
         if (existingUser.isPresent()) {
             throw new UserException("Email is already registered! Please login.");

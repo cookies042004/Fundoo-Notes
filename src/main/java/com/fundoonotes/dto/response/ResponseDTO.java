@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseDTO {
-    // [Prajwal]:UC4:Standardized API Response wrapper
+    // UC4:Standardized API Response wrapper
     private String message;
     private Object data;
 }

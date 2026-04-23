@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class UserController {
 
-    // [Prajwal]:UC4:Constructor injection of Service
+    // UC4:Constructor injection of Service
     private final UserService userService;
 
-    // [Prajwal]:UC4:Endpoint for user registration
+    // UC4:Endpoint for user registration
     @PostMapping("/register")
     public ResponseEntity<ResponseDTO> registerUser(@Valid @RequestBody UserRegistrationDTO userDTO) {
         log.info("Received request to register user: {}", userDTO.getEmail());
